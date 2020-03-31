@@ -72,7 +72,26 @@ class Tree(object):
     def __init__(self):
         self._level = 0
         self._root = None # TreeNode
-        pass
+
+    @property
+    def level(self):
+        if not self._level:
+            return None
+        return self._level
+
+    @level.setter
+    def level(self, height):
+        self._level = height
+
+    @property
+    def root(self):
+        if not self._root:
+            return None
+        return self._root
+
+    @root.setter
+    def root(self, troot):
+        self._root = troot
 
     def create(self, numbers):
         # Create a binary tree from a string of numbers
@@ -128,10 +147,8 @@ class Tree(object):
 
         return self._root
 
-    def print_tree_level_order(self):
-        # Print a binary tree in level order
-        # type root: TreeNode
-        # rtype: string
+    def print_level_order(self):
+        # Print a binary tree in level order, aka Breadth first search
         if not self._root:
             return None
 
@@ -166,6 +183,26 @@ class Tree(object):
             listLen = len(treeList)
 
         print(treeList)
+
+    def print_pre_order(self):
+        # Print tree in pre-order (root, left, right)
+        # aka Depth first search
+        if not self._root:
+            return None
+
+        treeList = list()
+        self.traverse_pre_order(self._root, treeList)
+
+        print(treeList)
+
+    def traverse_pre_order(self, tnode, tlist):
+        # Base case: if is_leaf, add value and return
+        if not tnode:
+            return None
+
+        tlist.append(tnode.value)
+        self.traverse_pre_order(tnode.left, tlist)
+        self.traverse_pre_order(tnode.right, tlist)
 
     def is_symmetric(self):
         if not self._root:
