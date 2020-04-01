@@ -40,6 +40,9 @@ class TreeNode(object):
         self._right = tnode
 
     def is_leaf(self):
+        if not self:
+            return False
+
         if not self._left and not self._right:
             return True
         else:
@@ -187,9 +190,6 @@ class Tree(object):
     def print_pre_order(self):
         # Print tree in pre-order (root, left, right)
         # aka Depth first search
-        if not self._root:
-            return None
-
         treeList = list()
         self.traverse_pre_order(self._root, treeList)
 
@@ -203,6 +203,54 @@ class Tree(object):
         tlist.append(tnode.value)
         self.traverse_pre_order(tnode.left, tlist)
         self.traverse_pre_order(tnode.right, tlist)
+
+    def print_in_order(self):
+        # Print tree in in-order (left, root, right)
+        treeList = list()
+        self.traverse_in_order(self._root, treeList)
+
+        print(treeList)
+
+    def traverse_in_order(self, tnode, tlist):
+        if not tnode:
+            return None
+
+        if tnode.is_leaf():
+            tlist.append(tnode.value)
+            return None
+
+        self.traverse_in_order(tnode.left, tlist)
+        tlist.append(tnode.value)
+        self.traverse_in_order(tnode.right, tlist)
+
+    def print_post_order(self):
+        # Print tree in post-order (left, right, root)
+        treeList = list()
+        self.traverse_post_order(self._root, treeList)
+
+        print(treeList)
+
+    def traverse_post_order(self, tnode, tlist):
+        if not tnode:
+            return None
+
+        if tnode.is_leaf():
+            tlist.append(tnode.value)
+            return None
+
+        self.traverse_post_order(tnode.left, tlist)
+        self.traverse_post_order(tnode.right, tlist)
+        tlist.append(tnode.value)
+
+    def height(self):
+        # Get tree height
+        return self.cal_height(self._root)
+
+    def cal_height(self, tnode):
+        if not tnode:
+            return 0
+
+        return 1 + max(self.cal_height(tnode.left), self.cal_height(tnode.right))
 
     def is_symmetric(self):
         if not self._root:
