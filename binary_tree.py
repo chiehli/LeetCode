@@ -72,19 +72,23 @@ class TreeNode(object):
         format(val, leftVal, rightVal))
 
 class Tree(object):
-    def __init__(self):
-        self._level = 0
-        self._root = None # TreeNode
+    def __init__(self, numbers, tnode=None):
+        if tnode:
+            self._root = tnode # TreeNode
+            self._height = tnode.height
+        else:
+            if numbers:
+                self.create(numbers)
 
     @property
-    def level(self):
-        if not self._level:
+    def height(self):
+        if not self._height:
             return None
-        return self._level
+        return self._height
 
-    @level.setter
-    def level(self, height):
-        self._level = height
+    @height.setter
+    def height(self, tHeight):
+        self._height = tHeight
 
     @property
     def root(self):
@@ -93,8 +97,8 @@ class Tree(object):
         return self._root
 
     @root.setter
-    def root(self, troot):
-        self._root = troot
+    def root(self, tRoot):
+        self._root = tRoot
 
     def create(self, numbers):
         # Create a binary tree from a string of numbers
@@ -138,7 +142,7 @@ class Tree(object):
             level += 1
             count = 2 ** level
 
-        self._level = level
+        self._height = level
         self._root = root
 
         print(len(tree))
@@ -242,15 +246,27 @@ class Tree(object):
         self.traverse_post_order(tnode.right, tlist)
         tlist.append(tnode.value)
 
-    def height(self):
+    def get_height(self, tnode):
         # Get tree height
-        return self.cal_height(self._root)
+        return self.cal_height(tnode)
 
     def cal_height(self, tnode):
         if not tnode:
             return 0
 
         return 1 + max(self.cal_height(tnode.left), self.cal_height(tnode.right))
+
+    def get_diameter(self, tnode):
+        return self.cal_diameter(tnode)
+
+    def cal_diameter(self, tnode):
+        if not tnode:
+            return 0
+
+        diaRoot = self.get_height(tnode.left) + self.get_height(tnode.right)
+        diaLeft = self.cal_diameter(tnode.left)
+        diaRight = self.cal_diameter(tnode.right)
+        return max(diaRoot, diaLeft, diaRight)
 
     def is_symmetric(self):
         if not self._root:
