@@ -19,7 +19,8 @@ class MergeIntervals():
         ans = [] # Initialization for list
 
         # Sort intervals
-        self.qsort_intervals(intervals, 0, len(intervals) - 1)
+        intervals.sort()
+        #self.qsort_intervals(intervals, 0, len(intervals) - 1)
         print("After sorting, {}".format(intervals))
 
         for int_item in intervals:

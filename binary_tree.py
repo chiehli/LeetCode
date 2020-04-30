@@ -39,6 +39,13 @@ class TreeNode(object):
     def right(self, tnode):
         self._right = tnode
 
+    def is_equal(self, tnode):
+        if not tnode or not self:
+            return False
+
+        if self._value == tnode.value:
+            return True
+
     def is_leaf(self):
         if not self:
             return False
@@ -289,3 +296,125 @@ class Tree(object):
         else:
             return (self.check_symmetric(leftTree.left, rightTree.right) and
                     self.check_symmetric(leftTree.right, rightTree.left))
+
+    def left_side_view(self):
+        if not self._root:
+            return None
+
+        treeList = []
+        max_level = []
+        max_level.append(0)
+        self.get_left_side(self._root, 1, max_level, treeList)
+
+        print(treeList)
+
+    def get_left_side(self, tnode, level, max_level, treeList):
+        if not tnode:
+            return None
+
+        if level > max_level[0]:
+            treeList.append(tnode.value)
+            max_level[0] = level
+
+        self.get_left_side(tnode.left, level + 1, max_level, treeList)
+        self.get_left_side(tnode.right, level + 1, max_level, treeList)
+
+    def right_side_view(self):
+        if not self._root:
+            return None
+
+        treeList = []
+        max_level = []
+        max_level.append(0)
+        self.get_right_side(self._root, 1, max_level, treeList)
+
+        print(treeList)
+
+    def get_right_side(self, tnode, level, max_level, treeList):
+        if not tnode:
+            return None
+
+        if level > max_level[0]:
+            treeList.append(tnode.value)
+            max_level[0] = level
+
+        self.get_right_side(tnode.right, level + 1, max_level, treeList)
+        self.get_right_side(tnode.left, level + 1, max_level, treeList)
+
+    def bottom_side_view(self):
+        # bottom side view from left to right
+        if not self._root:
+            return None
+
+        treeList = []
+        self.get_bottom_side_view(self._root, treeList)
+
+        print(treeList)
+
+    def get_bottom_side_view(self, tnode, treeList):
+        if not tnode:
+            return None
+
+        if tnode.is_leaf():
+            treeList.append(tnode.value)
+
+        self.get_bottom_side_view(tnode.left, treeList)
+        self.get_bottom_side_view(tnode.right, treeList)
+
+    def exist_path_sum(self, target_val):
+        # A path sum is defined as the sum of node value from root to leave
+        # This function finds if any path sum equals the input target_val
+        if not self._root:
+            return False
+
+        return self.find_path_sum(self._root, target_val)
+
+    def find_path_sum(self, tnode, target_sum):
+        if not tnode:
+            return False
+
+        if tnode.is_leaf():
+            if tnode.value == target_sum:
+                return True
+
+        target_sum -= tnode.value
+        return (self.find_path_sum(tnode.left, target_sum) or
+                self.find_path_sum(tnode.right, target_sum))
+
+    def find_least_common_ancestor(self, tnode1, tnode2):
+        # Given two tree nodes, find their least common ancestor in the binary treeNode
+        # type tnode1, tnode2: TreeNode
+        # rtype: TreeNode
+        if (not self._root or not tnode1 or not tnode2 or
+            not self.search(self._root, tnode1) or not self.search(self._root, tnode2)):
+            return None
+
+        return self.lca_helper(self._root, tnode1, tnode2)
+
+    def lca_helper(self, root, tnode1, tnode2):
+        if root.is_equal(tnode1) or root.is_equal(tnode2):
+            return root
+
+        tnode1_in_left = self.search(root.left, tnode1)
+        tnode2_in_left = self.search(root.left, tnode2)
+
+        if ((tnode1_in_left and not tnode2_in_left) or
+            (not tnode1_in_left and tnode2_in_left)):
+            # tnode1 and tnode2 are in different subtree, current root is the LCA
+            return root
+        elif tnode1_in_left and tnode2_in_left:
+            return self.lca_helper(root.left, tnode1, tnode2)
+        elif not tnode1_in_left and not tnode2_in_left:
+            return self.lca_helper(root.right, tnode1, tnode2)
+
+    def search(self, root, tnode):
+        # Check if the tree node is in current binary tree
+        # type tnode: TreeNode
+        # rtype: bool
+        if not root or not tnode:
+            return False
+
+        if root.is_equal(tnode):
+            return True
+
+        return self.search(root.left, tnode) or self.search(root.right, tnode)
