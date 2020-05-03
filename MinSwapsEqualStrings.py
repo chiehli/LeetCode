@@ -33,13 +33,11 @@ class StringOperation(object):
         if res_len % 2 == 1:
             return -1
 
-
         # if s1 = 'xx' and s2 = 'yy', then one swap can make them equal
         # if s1 = 'xy' and s2 = 'yx', then we need two swaps
-        y_count = res_len - x_count
-
         # count how many xx and yy pairs in res_str1
         # and how many xy pairs left
+        y_count = res_len - x_count
         swap_count = x_count / 2 + (y_count) / 2 + x_count % 2 + y_count % 2
 
         return swap_count
