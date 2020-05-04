@@ -3,7 +3,7 @@ LeetCode 1221. Split a String in Balanced Strings
 
 """
 
-class StringOperation(object):
+class SplitStrings(object):
     def split_in_balanced_strings(self, input_str):
         if not input_str:
             return 0
@@ -36,7 +36,7 @@ class StringOperation(object):
 
 def main():
     input_str = ['RLRRLLRLRL', 'RLLLLRRRLR', 'LLLLRRRR', 'RLRRRLLRLL']
-    str_obj = StringOperation()
+    str_obj = SplitStrings()
 
     for str in input_str:
         str_obj.split_in_balanced_strings(str)

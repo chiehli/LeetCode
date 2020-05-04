@@ -7,7 +7,7 @@ string1 and string2 only consist letters 'x' and 'y'
 
 """
 
-class StringOperation(object):
+class SwapStrings(object):
     def find_min_swaps(self, str1, str2):
         if len(str1) != len(str2):
             return -1
@@ -45,7 +45,7 @@ class StringOperation(object):
 def main():
     strs1 = ['xyyyyx', 'yyy', 'xy', 'xx', 'xxy']
     strs2 = ['xxxxyy', 'yyy', 'yx', 'yy', 'yyx']
-    str_obj = StringOperation()
+    str_obj = SwapStrings()
 
     for i in range(len(strs1)):
         print(strs1[i])
