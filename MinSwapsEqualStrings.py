@@ -1,7 +1,7 @@
 """
 1247. Minimum Swaps to Make Strings Equal
 
-Find the minimum number of swaps requried to make string1 and string2 equals
+Find the minimum number of swaps requried to make string1 and string2 equal
 Return -1 if it is impossible to do so
 string1 and string2 only consist letters 'x' and 'y'
 
