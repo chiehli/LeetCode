@@ -5,7 +5,7 @@ Shuffle a set of numbers without duplicates
 """
 import random
 
-class Solution(object):
+class ShuffleArray(object):
     def __init__(self, nums):
         """
         :type nums: List[int]
@@ -59,7 +59,7 @@ class Solution(object):
 def main():
     nums = ['1', '2', '3', '4', '5', '6']
     print('input array: {0}'.format(nums))
-    obj = Solution(nums)
+    obj = ShuffleArray(nums)
     print('shuffle array: {0}'.format(obj.shuffle()))
     print('reset array: {0}'.format(obj.reset()))
 
