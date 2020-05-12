@@ -16,8 +16,9 @@ class Container(object):
         Thoughts:
             Start with the left most and right most indexes
             Calculate its area (init water volume)
-            Next, move only the lower value index toward center and get the area
-             every time until the left index and right index meet each other
+            Next, move only the lower value index toward center (may be on the
+            left or right side) and get the area till the left index and right
+            index meet each other
         """
 
         if not heights:
