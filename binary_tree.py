@@ -418,3 +418,40 @@ class Tree(object):
             return True
 
         return self.search(root.left, tnode) or self.search(root.right, tnode)
+
+    def find_tilt(self):
+        """
+        The tilt of a tree node is defined as the absolute difference between
+        the sum of all left subtree node values and the sum of all right subtree
+        node values. Null node has tilt 0.
+
+        The tile of the whole tree is defined as the sum of all nodes' tilt.
+        """
+        if not self._root:
+            return 0
+
+        tilt_val = []
+        tilt_val.append(0)
+        self.tilt_helper(self._root, tilt_val)
+
+        return tilt_val[0]
+
+    def tilt_helper(self, root, tilt_val):
+        if not root or root.is_leaf():
+            tilt_val[0] += 0
+            return 0
+
+        left_sum = self.subtree_sum(root.left)
+        right_sum = self.subtree_sum(root.right)
+        tilt_val[0] += abs(left_sum - right_sum)
+
+        return self.tilt_helper(root.left, tilt_val) + self.tilt_helper(root.right, tilt_val)
+
+    def subtree_sum(self, tnode):
+        if not tnode:
+            return 0
+
+        if tnode.is_leaf():
+            return tnode.value
+
+        return (tnode.value + self.subtree_sum(tnode.left) + self.subtree_sum(tnode.right))
