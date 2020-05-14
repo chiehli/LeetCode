@@ -226,10 +226,6 @@ class Tree(object):
         if not tnode:
             return None
 
-        if tnode.is_leaf():
-            tlist.append(tnode.value)
-            return None
-
         self.traverse_in_order(tnode.left, tlist)
         tlist.append(tnode.value)
         self.traverse_in_order(tnode.right, tlist)
@@ -243,10 +239,6 @@ class Tree(object):
 
     def traverse_post_order(self, tnode, tlist):
         if not tnode:
-            return None
-
-        if tnode.is_leaf():
-            tlist.append(tnode.value)
             return None
 
         self.traverse_post_order(tnode.left, tlist)

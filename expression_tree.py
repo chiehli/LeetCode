@@ -185,3 +185,9 @@ class ExpressionTree(object):
                     raise Exception('divisor can not be 0')
                 else:
                     return (self.evaluate(tnode.left) / self.evaluate(tnode.right))
+
+    def print_tree(self, tnode, tstring):
+        if tnode:
+            self.print_tree(tnode.left, tstring)
+            tstring[0] += str(tnode.value)
+            self.print_tree(tnode.right, tstring)
