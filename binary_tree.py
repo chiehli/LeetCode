@@ -443,7 +443,63 @@ class Tree(object):
         if not tnode:
             return 0
 
-        if tnode.is_leaf():
-            return tnode.value
-
         return (tnode.value + self.subtree_sum(tnode.left) + self.subtree_sum(tnode.right))
+
+
+    def prune(self, tnode):
+        """
+        LeetCode 814.
+        Assume every node's value is either a 0 or a 1
+        Remove the subtree if not containing a 1
+
+        --> Get sum of each subtree and prune it if sum = 0
+        """
+        if not tnode:
+            return None
+
+        left_sum = self.subtree_sum(tnode.left)
+        right_sum = self.subtree_sum(tnode.right)
+
+        if left_sum == 0:
+            # left subtree contains all 0s
+            tnode.left = None
+        else:
+            self.prune(tnode.left)
+
+        if right_sum == 0:
+            tnode.right = None
+        else:
+            self.prune(tnode.right)
+
+        return tnode
+
+    def quick_prune(self, tnode):
+        """
+        LeetCode 814.
+        Assume every node's value is either a 0 or a 1
+        Remove the subtree if not containing a 1
+
+        --> Check if subtree contains 1
+        """
+        if not tnode:
+            return None
+
+        self.contain_one(tnode)
+        return tnode
+
+    def contain_one(self, tnode):
+        if not tnode:
+            return False
+
+        left1 = self.contain_one(tnode.left)
+        right1 = self.contain_one(tnode.right)
+
+        if not left1:
+            tnode.left = None
+
+        if not right1:
+            tnode.right = None
+
+        contain1 = tnode.value == 1 or left1 or right1
+
+        return contain1
