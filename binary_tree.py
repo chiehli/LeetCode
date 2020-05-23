@@ -5,7 +5,7 @@ import math
 from collections import deque
 
 class TreeNode(object):
-    def __init__(self, x):
+    def __init__(self, x=0):
         # type x: integers
         self._value = x
         self._left = None
@@ -16,6 +16,9 @@ class TreeNode(object):
         if not self:
             return 'null'
         return self._value
+    @value.setter
+    def value(self, val):
+        self._value = val
 
     @property
     def left(self):
@@ -503,3 +506,20 @@ class Tree(object):
         contain1 = tnode.value == 1 or left1 or right1
 
         return contain1
+
+    def get_parent_and_depth(self, root, x, depth, pNode):
+        if not root or (not root.left and not root.right):
+            pNode = None
+            #print('Not root. depth = {0}, crRoot = {1}'.format(depth, root.value))
+            return -1
+
+        if root.left and root.left.value == x or root.right and root.right.value == x:
+            pNode.value = root.value
+            #print('Bingo. depth = {0}, crRoot = {1}'.format(depth, root.value))
+            return depth + 1
+
+        left_depth = self.get_parent_and_depth(root.left, x, depth + 1, pNode)
+        if left_depth != -1:
+            return left_depth
+
+        return self.get_parent_and_depth(root.right, x, depth + 1, pNode)
