@@ -39,15 +39,28 @@ class Anagrams(object):
         for _, val in sAnagrams.iteritems():
             ans.append(val)
 
-        # if key is not needed, can use "_" instead
         """
-        for key, value in sAnagrams.iteritems():
-            ans.append(value)
-        # ans == sAnagrams.values()
-        """
+        Explanation for code in lines 39-40
 
-        #for key in sAnagrams:
-        #    ans.append(sAnagrams[key])
+        - The original code is:
+
+        for key in sAnagrams:
+            ans.append(sAnagrams[key])
+
+        - Because sAnagrams is a dictionary, we can also write as:
+
+        for key, val in sAnagrams.iteritems():
+            ans.append(val)
+
+        - Since the values of keys are not used, we can use "_" instead:
+
+        for _, val in sAnagrams.iteritems():
+            ans.append(val)
+
+        - We can also get all the values in a dictionary by using the '.values()'
+
+        ans == sAnagrams.values()
+        """
 
         return ans
 
