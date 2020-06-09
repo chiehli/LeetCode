@@ -3,6 +3,7 @@ A class for binary tree
 """
 import math
 from collections import deque
+from collections import Counter
 
 class TreeNode(object):
     def __init__(self, x=0):
@@ -248,6 +249,25 @@ class Tree(object):
         self.traverse_post_order(tnode.right, tlist)
         tlist.append(tnode.value)
 
+    def print_all_paths(self):
+        crPath = []
+        paths = []
+        self.print_all_paths_recur(self.root, crPath, paths)
+        print(paths)
+
+    def print_all_paths_recur(self, tnode, crPath, paths):
+        if not tnode:
+            return
+
+        crPath.append(tnode.value)
+
+        if not tnode.left and not tnode.right:
+            paths.append(list(crPath))
+
+        self.print_all_paths_recur(tnode.left, crPath, paths)
+        self.print_all_paths_recur(tnode.right, crPath, paths)
+        crPath.pop(-1)
+
     def get_height(self, tnode):
         # Get tree height
         return self.cal_height(tnode)
@@ -448,7 +468,6 @@ class Tree(object):
 
         return (tnode.value + self.subtree_sum(tnode.left) + self.subtree_sum(tnode.right))
 
-
     def prune(self, tnode):
         """
         LeetCode 814.
@@ -506,6 +525,23 @@ class Tree(object):
         contain1 = tnode.value == 1 or left1 or right1
 
         return contain1
+
+    def find_duplicate_subtrees(self, root):
+        count = Counter()
+        ans = []
+
+        def collect(node):
+            if not node: return '#'
+            serial = '{},{},{}'.format(node.value, collect(node.left), collect(node.right))
+            count[serial] += 1
+
+            if count[serial] == 2:
+                ans.append(node)
+            return serial
+
+        collect(root)
+
+        return ans
 
     def get_parent_and_depth(self, root, x, depth, pNode):
         if not root or (not root.left and not root.right):
